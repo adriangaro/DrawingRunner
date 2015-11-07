@@ -10,5 +10,10 @@ class Player
     @shape = CP::Shape::Poly @body,
                              @vertices,
                              vec2(25, -50))
+    @factor = Point[@animation.width * 1.0 / 50, @animation.height * 1.0 / 100]
+  end
+
+  def draw(offset)
+    @animation.next_frame.draw(offset.x + @body.x, offset.y + @body.y, 1, @factor.x, @factor.y)
   end
 end
