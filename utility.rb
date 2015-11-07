@@ -24,7 +24,7 @@ class Animation
 end
 
 class Point
-  self.[](x, y)
+  def self.[](x, y)
     self.new x, y
   end
 
@@ -32,6 +32,7 @@ class Point
   def initialize(x, y)
     @x = x
     @y = y
+  end
 end
 
 class Numeric

@@ -9,7 +9,7 @@ class Player
                  vec2(0.0, 0.0)]
     @shape = CP::Shape::Poly @body,
                              @vertices,
-                             vec2(25, -50))
+                             vec2(25, -50)
     @factor = Point[@animation.width * 1.0 / 50, @animation.height * 1.0 / 100]
   end
 

@@ -1,5 +1,5 @@
 class Button
-  attr_accessor :on_click_block, :on_hover_block, :on_hover_exit_block, :hovered
+  attr_accessor :on_click_block, :on_hover_block, :on_hover_exit_block, :hovered, :x, :y, :width, :height, :image
   def initialize(x, y, width, height, source)
     @x = x
     @y = y
