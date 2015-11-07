@@ -21,6 +21,14 @@ class Animation
   end
 end
 
+def center_offset_x (width, window)
+  ( window.width - width ) / 2
+end
+
+def center_offset_y (height, window)
+  ( window.height - height ) / 2
+end
+
 def vec2(x, y)
   CP::Vec2.new x, y
 end
