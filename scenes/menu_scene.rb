@@ -4,6 +4,7 @@ class MenuScene < Scene
     @background = Gosu::Image.new("resources/images/main_menu_bg.jpg")
     @button = Button.new(@window.width / 2,@window.height / 3,125,40,"resources/images/button_start_default.png")
     @button.on_hover_block = lambda { @button.image = Gosu::Image.new("resources/images/button_start_hover.png") }
+    @button.on_hover_exit_block = lambda { @button.image = Gosu::Image.new("resources/images/button_start_default.png") }
     @buttons << @button
   end
 
