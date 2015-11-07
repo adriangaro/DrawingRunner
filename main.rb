@@ -1,6 +1,7 @@
 require_relative "requires"
 
 class GameWindow < Gosu::Window
+  attr_accessor :scene
   def initialize
     super 640, 480, true
     @background = Gosu::Image.new("resources/images/main_menu_bg.jpg", options={})
@@ -12,6 +13,8 @@ class GameWindow < Gosu::Window
 
   def update
     add_keyboard_controls
+    add_mouse_controls
+    add_hover_ability
   end
 
   def add_keyboard_controls
@@ -27,8 +30,14 @@ class GameWindow < Gosu::Window
     @button.draw
   end
 
+  def add_hover_ability
+    @scene.on_hover_exit
+    @scene.on_hover
+  end
 
-
+  def add_mouse_controls
+    @scene.onclick if button_down? Gosu::MsLeft
+  end
 end
 
 $window = GameWindow.new
