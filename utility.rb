@@ -22,7 +22,7 @@ class Animation
     @aux
   end
 end
-
+#Animation.new("resources/images/menu/")
 class Point
   def self.[](x, y)
     self.new x, y
