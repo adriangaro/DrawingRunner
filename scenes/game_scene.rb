@@ -3,7 +3,7 @@ class GameScene < Scene
   def initialize(window)
     super window
     @floor = Floor.new @space
-    @background = Gosu::Image.new("resources/images/main_menu_bg.jpg")
+    @background = Gosu::Image.new("resources/images/interface/main_menu_bg.jpg")
     @player = Player.new @space
     @player.warp Point[100, 320]
     @drawings = []
