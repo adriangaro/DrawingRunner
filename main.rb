@@ -1,10 +1,18 @@
 require_relative "requires"
 
 class GameWindow < Gosu::Window
-  attr_accessor :scene
+  attr_accessor :scene, :music, :scenes, :sfx, :menu_music, :sfx_buton
   def initialize
     super 640, 480, true
+
+    @music = true;
+    @menu_music = Gosu::Song.new(self, "resources/music/menu_music.wav")
+    @sfx_buton = Gosu::Song.new(self, "resources/sfx/button_sound.wav")
+    @menu_music.play(looping = true)
+    @sfx = true;
     @scene = MenuScene.new self
+    @scenes = {}
+    @scenes[@scene.class] = @scene
   end
 
   def update
@@ -33,6 +41,7 @@ class GameWindow < Gosu::Window
 
   def add_mouse_controls
     @scene.on_click if button_down? Gosu::MsLeft
+    @scene.on_click_exit if !button_down? Gosu::MsLeft
   end
 end
 

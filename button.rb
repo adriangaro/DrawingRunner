@@ -1,5 +1,5 @@
 class Button
-  attr_accessor :on_click_block, :on_hover_block, :on_hover_exit_block, :hovered, :x, :y, :width, :height, :image
+  attr_accessor :on_click_block, :on_hover_block, :on_hover_exit_block, :on_click_exit_block, :hovered, :x, :y, :width, :height, :image, :pressed
   def initialize(x, y, width, height, source)
     @x = x
     @y = y
@@ -7,6 +7,7 @@ class Button
     @height = height
     @image = Gosu::Image.new source
     @hovered = false
+    @pressed = false
   end
 
   def draw
@@ -15,6 +16,10 @@ class Button
 
   def on_click()
     @on_click_block.call if @on_click_block != nil
+  end
+
+  def on_click_exit()
+    @on_click_exit_block.call if @on_click_exit_block != nil
   end
 
   def on_hover()

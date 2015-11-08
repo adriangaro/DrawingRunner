@@ -4,25 +4,24 @@ class Animation
     @size = size
     @frames = []
     size.times do |x|
-      @frames << Gosu::Image.new(source + x + ".png")
+      @frames << Gosu::Image.new(source + (x + 1).to_s + ".png")
     end
     @width = @frames[0].width
     @height = @frames[0].height
-    @frame = 0
+    @current_frame = 0
   end
 
   def next_frame
     @aux = @frames[@current_frame]
-    if @current_frame == @number
+    @current_frame += 1
+    if @current_frame == @size - 1
       @current_frame = 0
-    else
-      @current_frame += 1
     end
 
     @aux
   end
 end
-
+#Animation.new("resources/images/menu/")
 class Point
   def self.[](x, y)
     self.new x, y
