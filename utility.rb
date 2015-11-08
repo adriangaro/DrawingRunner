@@ -1,22 +1,22 @@
 class Animation
-  attr_accessor :size, :current_frame, :width, :height
-  def initialize(source, size)
+  attr_accessor :size, :current_frame, :width, :height, :speed
+  def initialize(source, size, speed = 1)
+    @speed = speed
     @size = size
     @frames = []
     size.times do |x|
-      @frames << Gosu::Image.new(source + x + ".png")
+      @frames << Gosu::Image.new(source + (x + 1).to_s + ".png")
     end
     @width = @frames[0].width
     @height = @frames[0].height
-    @frame = 0
+    @current_frame = 0
   end
 
   def next_frame
     @aux = @frames[@current_frame]
-    if @current_frame == @number
+    @current_frame += 1 * @speed
+    if @current_frame == @size
       @current_frame = 0
-    else
-      @current_frame += 1
     end
 
     @aux
@@ -33,6 +33,10 @@ class Point
     @x = x
     @y = y
   end
+
+  def to_vec2
+    vec2(@x, @y)
+  end
 end
 
 class Numeric
@@ -41,6 +45,13 @@ class Numeric
   end
 end
 
+
 def vec2(x, y)
   CP::Vec2.new x, y
+end
+
+class CP::Vec2
+  def to_point
+    Point[x, y]
+  end
 end

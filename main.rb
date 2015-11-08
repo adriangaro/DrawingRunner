@@ -1,10 +1,10 @@
 require_relative "requires"
 
 class GameWindow < Gosu::Window
-  attr_accessor :scene
+  attr_accessor :scene, :offset
   def initialize
     super 640, 480, true
-    @scene = MenuScene.new self
+    @scene = GameScene.new self
   end
 
   def update
@@ -12,10 +12,11 @@ class GameWindow < Gosu::Window
     add_mouse_controls
     add_hover_ability
     @scene.update
+    @offset = @scene.offset
   end
 
   def add_keyboard_controls
-    close if button_down? Gosu::KbEscape
+    @scene.keyboard_controls
   end
 
   def needs_cursor?

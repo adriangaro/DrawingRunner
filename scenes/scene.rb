@@ -1,8 +1,11 @@
 class Scene
-  attr_accessor :buttons
+  attr_accessor :buttons, :offset, :space
   def initialize(window)
     @window = window
     @buttons = []
+    @space = CP::Space.new
+    @space.gravity = vec2(0, 100)
+    @offset = Point[0, 0]
   end
 
   def update
@@ -35,5 +38,9 @@ class Scene
     @buttons.each do |but|
       but.on_hover_exit if (@mouse.x - but.x).abs > but.width / 2 && (@mouse.y - but.y).abs > but.height / 2 && but.hovered
     end
+  end
+
+  def keyboard_controls
+    @window.close if @window.button_down? Gosu::KbEscape
   end
 end
