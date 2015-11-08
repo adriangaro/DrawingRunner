@@ -1,5 +1,5 @@
 class Player < Obj
-  attr_accessor :shape, :body, :animation, :can_jump
+  attr_accessor :shape, :body, :image, :can_jump, :dir
   def initialize(space)
     super space
     @image = $skin
@@ -12,15 +12,28 @@ class Player < Obj
     @factor = Point[50 * 1.0 / @image.width, 50 * 1.0 / @image.height]
     add_to_space
     @can_jump = false
+    @dir = 1
   end
 
-  def update
-    @body.t = 10
-    @body.apply_force(vec2(800, 0), vec2(0, 0))
+  def update(delta)
+    coef = 1.05 ** (delta / 300)
+    @body.t = 10  * @dir * coef
+    @body.apply_force(vec2(800, 0) * @dir * coef, vec2(0, 0))
   end
 
   def jump
-    @body.apply_impulse(vec2(0, -800), vec2(0, 0)) if(@can_jump)
+    if(@can_jump)
+      @body.apply_impulse(vec2(0, -800), vec2(0, 0))
+    else
+      res = false
+      query = @space.segment_query(@body.p + vec2(25, 0) * @dir, @body.p + vec2(30, 0) * @dir, CP::ALL_LAYERS, CP::NO_GROUP)  do |shape, t, n|
+        res = res || shape.collision_type == :ground
+      end
+      if(res)
+        @body.apply_impulse(vec2(- @dir * 600, -600), vec2(0, 0))
+        @dir = -@dir
+      end
+    end
   end
 
   def draw(offset)

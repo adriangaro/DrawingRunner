@@ -11,6 +11,7 @@ class Drawing < Obj
     @angles = []
     @timer = 0
     @image = Gosu::Image.new "resources/images/props/floor.png"
+    @particle_emitter = Ashton::ParticleEmitter.new(0 , 0, 3, image: Gosu::Image.new("resources/images/props/drop.png"), interval: 0.2, scale: 0.1, speed: 20, friction: 1, fade: 100, angular_velocity: -135..-45)
   end
 
   def add_point(mouse)
@@ -54,6 +55,11 @@ class Drawing < Obj
 
   def update
     @timer += 1
+    @last_update_at ||= Gosu::milliseconds
+    delta = [Gosu::milliseconds - @last_update_at, 100].min * 0.001 # Limit delta to 100ms (10fps), in case of freezing.
+    @particle_emitter.update delta
+    @particle_emitter.x = @point.x if @point
+    @particle_emitter.y = @point.y if @point
   end
 
   def add_to_space
@@ -70,6 +76,7 @@ class Drawing < Obj
     else
       for i in 0...@body.length  do
         @image.draw_rot(@body[i].p.x, @body[i].p.y, 1, @angles[i], 0, 0.5, @factors[i].x, 1)
+        @particle_emitter.draw
       end
     end
   end
