@@ -39,6 +39,15 @@ class MenuScene < Scene
     @buttons << @button_credits
 
 
+    #SELECT SKIN
+    @button_skins = Button.new(@window.width / 2, @window.height / 1.30, 125, 40 ,"resources/images/interface/button_credits_default.png")
+    @button_skins.on_click_block = lambda {
+      @window.scene = @window.scenes[SkinsScene] == nil ? SkinsScene.new(@window) : @window.scenes[SkinsScene]
+    }
+    @buttons << @button_skins
+
+
+
     #SETTING BUTTON
     @button_settings = Button.new(@window.width / 1.10,@window.height / 1.10 , 40 , 40 ,"resources/images/interface/button_settings_default.png")
     @button_settings.on_click_block = lambda {

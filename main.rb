@@ -1,5 +1,7 @@
 require_relative "requires"
 
+$skin = Gosu::Image.new("resources/images/props/Player.png")
+
 class GameWindow < Gosu::Window
   attr_accessor :scene, :music, :scenes, :sfx, :menu_music, :sfx_buton, :offset
   def initialize

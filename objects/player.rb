@@ -2,7 +2,7 @@ class Player < Obj
   attr_accessor :shape, :body, :animation, :can_jump
   def initialize(space)
     super space
-    @image = Gosu::Image.new "resources/images/props/Player.png"
+    @image = $skin
     @body = CP::Body.new 10, 10
 
     @shape = CP::Shape::Circle.new(@body, 25, vec2(0, 0))
