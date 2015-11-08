@@ -18,11 +18,9 @@ class GameScene < Scene
   end
 
   def update
-    puts @drawings.length
     @drawings.delete_if {|x| x.update; x.clear if x.timer > 600; x.timer > 600}
-    puts @drawings.length
     @player.body.reset_forces
-    @floor.warp Point[@offset.x, 400]
+    @floor.warp Point[-@offset.x, 400]
     @player.update
     @space.step(1.0 / 60)
   end
@@ -30,10 +28,10 @@ class GameScene < Scene
 
   def keyboard_controls
     @window.close if Gosu::button_down? Gosu::KbEscape
-    @current_drawing.add_point Point[@window.mouse_x - @offset.x, @window.mouse_y - @offset.y] if Gosu::button_down? Gosu::MsLeft
-    if !Gosu::button_down?(Gosu::MsLeft) && !@current_drawing.points.empty?
-      @current_drawing.add_point Point[@window.mouse_x - @offset.x, @window.mouse_y - @offset.y]
-      @current_drawing.create_drawing
+    @current_drawing.add_point Point[@window.mouse_x, @window.mouse_y] if Gosu::button_down? Gosu::MsLeft
+    if !Gosu::button_down?(Gosu::MsLeft) && @current_drawing.point != nil
+      @current_drawing.add_point Point[@window.mouse_x, @window.mouse_y]
+      @current_drawing.create_drawing @offset
       @drawings << @current_drawing
       @current_drawing = Drawing.new @space
     end
@@ -45,6 +43,7 @@ class GameScene < Scene
     @player.draw(@offset)
     @floor.draw @offset
     @background.draw(0,0,0, @window.width*1.0/@background.width, @window.height*1.0/@background.height)
+    @current_drawing.draw @offset
     @drawings.each do |dr|
       dr.draw(@offset)
     end
